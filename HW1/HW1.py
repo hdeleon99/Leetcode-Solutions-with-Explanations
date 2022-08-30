@@ -74,3 +74,6 @@ print("Question 2 Output =====================================================")
 searchRange(nums1, target1)
 searchRange(nums2, target2)
 searchRange(nums3, target3)
+
+
+# Question 3
