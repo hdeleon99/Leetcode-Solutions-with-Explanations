@@ -22,3 +22,28 @@ If the element at the midpoint does not equal the target to begin with, evaluate
 If it is less than, move the left pointer to the right of the midpoint by 1.
 If the element at midpoint is greater than the target, move the right variable to the left of midpoint by 1. Repeat until left > right, and return the answer variable.
 Because we are utilizing the Binary Search algorithm, this has a complexity of O(log n)
+
+Number 3: Median of Two Sorted Arrays
+ Two arrays, assign them to variables A and B
+ We will determine what the smallest of the two arrays is, so we can run binary search on the smaller array.
+ Utilize a total and half variable to represent the total number of elements in both arrays, and half of total, respectively.
+ The half variable will tell us the total number of elements in the left partition.
+ Repeat the following until the median has been found:
+    Define a variable i to be the middle most element in array A
+    Define a variable j to be the middle most element of B
+    Initialize 4 variables: Aleft to the element at i, Aright to the element to the right of i, Bleft to the element at j, Bright to the element to the right of j.
+    If Aleft is less than or equal to Bright and Bleft is less than or equal to Aright, then we have partitioned the two arrays correctly, and we can use this fact to determine the median.
+        If the total number of elements in both arrays is odd, then we can return the minimum of Aright and Bright knowing that the minimum between the two corresponds to the median of the arrays merged together.
+        If the total of the arrays is even, then we can return the maximum of Aleft and Bleft, plus the minimum of Aright and Bright, divided by 2.
+    If Aleft is greater than Bright then we need to move our partition window in A to the left by 1.
+    Else, we need to move our partition window to the right by 1.
+ This algorithm runs in O(log(m+n)) time.
+
+ Number 4: Remove Nth Node From End Of List
+ In this problem we use two pointers, left and right. We will also use a dummy node.
+ Point the dummy node to head, point left to the dummy node, and point right to head.
+ We want to move right to the right n number of times. We then want to move both left and right
+ to the right until right reaches null. This ensures there is a gap of size n between the left pointer and the right
+ pointer. One right has reached null, left will be at the node one before the node to remove. So we
+ will point left.next to left.next.next to "remove" the nth node from the back of the list. Worst case
+ scenario this solution has a time complexity of O(n), where each node will need to be visited.
