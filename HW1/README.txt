@@ -1,3 +1,9 @@
+Hector Issiah Deleon
+CS497-4
+NetID: Yh2397
+9/1/2022
+
+
 Number 1: Two Sum
 - For a brute force solution we can use two for loops, one nested within the other.
 We will have two indexes for iterating, left and right. Start left off at 0, and start right off at 1.
