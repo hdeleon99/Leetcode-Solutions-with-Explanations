@@ -1,5 +1,5 @@
 # Python script for CS497-4 Homework 1
-from typing import List, Tuple, Any
+from typing import List, Tuple, Any, Optional
 
 
 # Question 1
@@ -111,6 +111,44 @@ def removeNthFromEnd(head, n):
     return dummy.next
 
 
+# Question 5
+def mergeTwoLists(list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    dummy = ListNode()
+    tail = dummy
+
+    while list1 and list2:
+        if list1.val < list2.val:
+            tail.next = list1
+            list1 = list1.next
+        elif list2.val <= list1.val:
+            tail.next = list2
+            list2 = list2.next
+        tail = tail.next
+    if list1 is not None:
+        tail.next = list1
+    elif list2 is not None:
+        tail.next = list2
+    return dummy.next
+
+
+def mergeKSortedLists(lists) -> Optional[ListNode]:
+    if not lists or len(lists) == 0:
+        return None
+    if len(lists) == 1:
+        return lists[0]
+    while len(lists) > 1:
+        merged_lists = []
+
+        for i in range(0, len(lists), 2):
+            l1 = lists[i]
+            l2 = lists[i + 1] if (i + 1) < len(lists) else None
+
+            merged_lists.append(mergeTwoLists(l1, l2))
+        lists = merged_lists
+    printLinkedList(lists[0])
+    return lists[0]
+
+
 # Question 1 Input ===========================================================
 example1 = [1, 2, 3, 4, 5, 6]
 target1 = 8  # should return [1, 5]
@@ -168,3 +206,17 @@ print("Question 4 Output =====================================================")
 removeNthFromEnd(linkedlist1, n1)  # Should return 5
 print("=======")
 removeNthFromEnd(linkedlist2, n2)  # Should return [1, 3]
+
+# Question 4 Input ===========================================================
+linkedlist1 = ListNode(1)
+linkedlist1.next = ListNode(2)
+linkedlist1.next.next = ListNode(4)
+
+linkedlist2 = ListNode(4)
+linkedlist2.next = ListNode(7)
+linkedlist2.next.next = ListNode(8)
+linkedlist2.next.next.next = ListNode(10)
+
+list_of_linked_lists = [linkedlist1, linkedlist2]
+print("Question 5 Output =====================================================")
+mergeKSortedLists(list_of_linked_lists)

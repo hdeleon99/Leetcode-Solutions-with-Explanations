@@ -47,3 +47,16 @@ Number 3: Median of Two Sorted Arrays
  pointer. One right has reached null, left will be at the node one before the node to remove. So we
  will point left.next to left.next.next to "remove" the nth node from the back of the list. Worst case
  scenario this solution has a time complexity of O(n), where each node will need to be visited.
+
+ Number 5: Merge K Sorted Linked Lists
+ The idea behind this solution is to use merge sort to sort each linked list within the array holding them all.
+First check for base cases, if the array holding the linked lists is empty, or if it is size 1, we can just return the first element in the array.
+We will work on the array holding the linked lists directly, so we will loop until the size of our
+array reaches 1, signaling that there is one main and merged linked list inside.
+Within this loop we will iterate through each linked list in the array, assigning pointers to
+array[i] and array[i + 1] to each represent the linked list at i and i + 1, let's call
+them list1 and list2. We will then call on the merge sort function to merge the two linked lists
+that we grabbed. Assign the original array to the result returned by the merge. This will continue
+until the size of our array is 1, again signaling that all linked lists have been merged together.
+Since we incorporate a merge sort into this algorithm, which has a time complexity of O(n*log(n)),
+we can say that the time complexity is O(n*log(k)), where k is the number of linked lists, and n is the number of nodes in total.
