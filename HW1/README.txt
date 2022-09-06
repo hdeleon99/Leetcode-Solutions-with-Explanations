@@ -33,7 +33,8 @@ Number 3: Median of Two Sorted Arrays
  Two arrays, assign them to variables A and B
  We will determine what the smallest of the two arrays is, so we can run binary search on the smaller array.
  Utilize a total and half variable to represent the total number of elements in both arrays, and half of total, respectively.
- The half variable will tell us the total number of elements in the left partition.
+ The half variable will tell us the total number of elements in the left partition. We will also use a sliding window technique
+
  Repeat the following until the median has been found:
     Define a variable i to be the middle most element in array A
     Define a variable j to be the middle most element of B
