@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 def majorityElement(nums):
     count, curr_max = 0, -1
 
@@ -52,3 +55,72 @@ print("Input 1: " + str(q2_input1) + f", and k = {k1} should return 3.")
 print(f"Input 2: " + str(q2_input2) + f", and k = {k2} should return 5.")
 print(f"kThLargestElement(Input1, k1): returned: {str(kThLargestElement(q2_input1, k1))}")
 print(f"kThLargestElement(Input2, k2): returned: {str(kThLargestElement(q2_input2, k2))}")
+
+
+def maximumGap(nums):
+    # Need to do this in linear time
+    # We will find the range of our numbers
+    # Put our numbers into n-1 buckets
+
+    length = len(nums)
+    if length < 2:
+        return 0
+    low, high = min(nums), max(nums)
+    bucket = defaultdict(list)
+
+    for num in nums:
+        if num == high:
+            index = length - 1
+        else:
+            index = (abs(low - num)) * (length - 1) // (high - low)
+
+        bucket[index].append(num)
+
+    bucket2 = []
+
+    for i in range(length):
+        if bucket[i]:
+            bucket2.append((min(bucket[i]), max(bucket[i])))
+    output = 0
+
+    for i in range(1, len(bucket2)):
+        output = max(output, abs(bucket2[i - 1][-1] - bucket2[i][0]))
+    return output
+
+
+print("Question 3 input -------------------------------------------")
+q3_input1 = [3, 6, 9, 1]
+q3_input2 = [9, 10, 1, 2, 5, 4, 3, 11, 35]
+print(f"maximumGap(input1): {maximumGap(q3_input1)}")
+print(f"maximumGap(input2): {maximumGap(q3_input2)}")
+
+
+def removeDuplicateLetters(s):
+    # Use a stack
+    # We need to keep track of greatest index number for each character
+    # Build a stack to check if we have seen letter before
+
+    lookup = defaultdict()
+
+    for i in range(len(s)):
+        lookup[s[i]] = i
+
+    stack = []
+
+    for i in range(len(s)):
+        if s[i] in stack:
+            continue
+        while stack and stack[-1] > s[i] and lookup[stack[-1]] > i:
+            #             b       >  c       lookup[b] > 2
+            stack.pop()
+
+        stack.append(s[i])
+
+    return "".join(stack)
+
+
+print("Question 4 input -------------------------------------------")
+q4_input1 = "abcdcb"  # should return "abcd"
+q4_input2 = "cbacdcbc"  # should return "acdb"
+print(f"removeDuplicateLetters(input1): {removeDuplicateLetters(q4_input1)}")
+print(f"removeDuplicateLetters(input2): {removeDuplicateLetters(q4_input2)}")
