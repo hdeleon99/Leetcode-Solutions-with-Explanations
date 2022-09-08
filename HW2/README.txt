@@ -1,3 +1,8 @@
+Hector Issiah Deleon
+CS497-4
+NetID: Yh2397
+9/8/2022
+
 #1
     We will aim to achieve a O(1) space complexity by working with the array in-place.
     Initialize a count variable to 0, and a max variable to -1 to start the function call.
