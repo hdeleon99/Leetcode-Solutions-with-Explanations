@@ -90,3 +90,27 @@
     Once this last loop has finished iterating, we will have a stack that contains no duplicate letters
     and maintains lexicographical order
 
+#5
+    In this algorithm we will utilize a dequeue data structure to satisfy our requirement to have a
+    monotonically increasing data structure, as well as our requirement to shrink our window from the left
+    once sum >= target. Dequeue gives us this ability to pop from the left.
+
+    Begin by declaring 4 objects: a variable reflecting the length of the input array (length), a variable
+    a deque object (deq) which will hold [number, index] pairs, a variable to hold the cumulative sum (cum_sum), and a variable to reflect
+    the shortest subarray.
+
+    Now iterate through each num in the array:
+        Increment the value of cum_sum by itself + the current number nums[i]
+
+        if cum_sum is greater than or equal to k:
+            shortest equals the minimum between itself and i + 1
+        initialize a variable named curr, and assign it a single array of two values [-inf, -inf]
+
+        while deq is not empty, and while cum_sum - the front-most value in deq >= k:
+            curr equals the front pair in the queue
+            now remove the front pair from the queue
+        if the first pair in curr does not equal negative infinity,
+            shortest now equals the minimum between shortest and i minus the index in the first pair in curr
+        while deq is not empty and cum_sum is less than or equal to the rear value in the array:
+            pop the leftmost pair from deq
+        append the current cum_sum and i pair to deq

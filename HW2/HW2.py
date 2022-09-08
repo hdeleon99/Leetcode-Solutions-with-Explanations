@@ -1,4 +1,6 @@
 from collections import defaultdict
+from collections import deque
+from math import inf
 
 
 def majorityElement(nums):
@@ -124,3 +126,46 @@ q4_input1 = "abcdcb"  # should return "abcd"
 q4_input2 = "cbacdcbc"  # should return "acdb"
 print(f"removeDuplicateLetters(input1): {removeDuplicateLetters(q4_input1)}")
 print(f"removeDuplicateLetters(input2): {removeDuplicateLetters(q4_input2)}")
+
+
+# 5
+def shortestSubarray(nums, k):
+    # thinking of sorting the array first, so we can use a sliding window to determine when and where we can shrink or expand our window/subarray
+    # Each element in the queue will be [cumulativeSum, index]
+    length = len(nums)
+    deq = deque()
+
+    cum_sum = 0
+    shortest = float(inf)
+
+    for i in range(length):
+        cum_sum += nums[i]
+        # if sum has now gotten bigger than k, our goal sum
+        if cum_sum >= k:
+            shortest = min(shortest, i + 1)
+
+        # reduce window size to find min window with sum >= k
+        curr = [float(-inf), float(-inf)]
+
+        while deq and ((cum_sum - deq[-1][0]) >= k):
+            curr = deq[-1]
+            deq.pop()
+        if curr[0] != float(-inf):
+            shortest = min(shortest, (i - curr[1]))
+        while deq and (cum_sum <= deq[0][0]):
+            deq.popleft()
+        deq.appendleft([cum_sum, i])
+    print(shortest == float(inf))
+    return -1 if shortest == float(inf) else shortest
+
+
+print("Question 5 input -------------------------------------------")
+q5_input1 = [2, -1, 2]  # should return 3
+q5k1 = 3
+q5_input2 = [1, 2]  # should return -1
+q5k2 = 4
+q5_input3 = [10, 200, 43, -100, 90, 3, 5, 19, 21]   # should return 2
+q5k3 = 243
+print(f"shortestSubarray(input1, k1): {shortestSubarray(q5_input1, q5k1)}")
+print(f"shortestSubarray(input2, k2): {shortestSubarray(q5_input2, q5k2)}")
+print(f"shortestSubarray(input3, k3): {shortestSubarray(q5_input3, q5k3)}")
