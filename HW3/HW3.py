@@ -1,3 +1,6 @@
+from typing import Optional, List
+
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -128,5 +131,51 @@ def maxPathSum(root):
 
 
 print("#3 Input ----------------------------------------")
+num3_root = TreeNode(1)
+num3_root.left = TreeNode(2)
+num3_root.right = TreeNode(3)
 num3Root1 = [1,2,3] # should return 6
-num3Root2 = []
+print("MaxPathSum(): ", maxPathSum(num3_root))
+
+
+# 4 =============================================================================
+def largestValues(root: Optional[TreeNode]) -> List[int]:
+    result = []
+    queue = [root]
+    if not root:
+        return result
+    while queue:
+        result.append(max(node.val for node in queue))
+
+        next_row = []
+
+        for node in queue:
+            for child in (node.left, node.right):
+                if child:
+                    next_row.append(child)
+        queue = next_row
+    return result
+
+
+print("#4 Input ----------------------------------------------")
+
+tree1_node1_root = TreeNode(5)
+tree1_node2 = TreeNode(8)
+tree1_node3 = TreeNode(10)
+tree1_node4 = TreeNode(3)
+tree1_node5 = TreeNode(2)
+tree1_node6 = TreeNode(5)
+tree1_node7 = TreeNode(6)
+
+tree1_node1_root.left = tree1_node2
+tree1_node1_root.right = tree1_node3
+tree1_node2.left = tree1_node4
+tree1_node2.right = tree1_node5
+tree1_node3.left = tree1_node6
+tree1_node3.right = tree1_node7
+print("input 1 should return [5, 10, 6]")
+print("largestValues(root1):", largestValues(tree1_node1_root))
+
+root2 = None
+print("input 2 is an empty tree and should return []")
+print("largestValues(input2):", largestValues(root2))
