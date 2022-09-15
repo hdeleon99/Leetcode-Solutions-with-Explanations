@@ -81,3 +81,74 @@ NetID: YH2397
             return root.val + max(leftMax, rightMax) because we cannot use both leftMax and rightMax
         Make the recursive call to dfs passing in root as an argument.
         Return res at index 0
+
+#4
+    In this problem, we utilize the algorithm of BFS (breadth first search) because we know BFS
+    will iterate row by row in a tree.
+    To begin, define the function largestValues(), taking in root as a parameter. Root should be
+    the root of a binary search tree.
+    Next, define and initialize an empty result array to hold our answer, and
+    define a variable called queue, and initialize it to equal an array holding the root param [root] as such,
+    passing root into an array allows us to iterate through queue and look at each node at that row
+
+    Now initialize a while loop, ending when queue is none:
+        first, append to the result array the max of node.val for each node at the current row/level in queue
+
+        next, initialize an empty array called next_row which we will use to go down a level in the tree
+
+        Using a for loop, iterate through each node in queue:
+            for each child in node.left and node.right:
+                if child is not none, then we can add it to our next_row array
+        Reassign queue to equal next_row, as it will now move queue down a level
+    return result
+
+    Time complexity: complexity of max is O(n*h) where n is the number
+    of nodes and h is the height of the tree,
+    because we will have to visit every node of the tree and compare it with
+    other values in that same row. So for every row, call on max() with a time complexity of O(N)
+
+#5
+    This problem can be solved using a recursive approach. To begin, we will need to construct a list
+    list that contains the values of each node in the tree. This will help us when we use
+    a left and a right pointer to determine the midpoint within the list. Everything to the left
+    of the midpoint will be used to construct the left subtree, and everything to the right of mid
+    will be used to construct the right subtree. This process continues until left > right
+
+    To create a list with the value of each node in the tree, we will traverse the tree
+    inorder.
+Define our main function, balanceBST, taking root as a parameter to signal the root of
+a binary tree:
+
+
+   Define an empty list, tree_to_list = []
+        Define a function, createListInorder, taking root and tree_list as parameters. Root is the
+             root provided by the parameter in the parent function, balanceBST, and tree_list should be
+             any empty list.
+                 if root is not None:
+                     call createListInorder, passing in root.left and tree_list as parameters
+                     append the value of root.val to tree_list
+                     call createListInorder, passing in root.right and tree_list as parameters
+             Before proceeding, call on the newly created function createListInorder, passing in
+             the tree_to_list initialized at the beginning of the code.
+        Define createBST function, taking left, right, and tree_list parameters.
+            Left and right correspond to the beginning of the tree_list, and the end of tree_list,
+            respectively.
+            If left is greater than right, return None.
+
+            calculate midpoint, which is (left + right) // 2
+
+            calculate root.left by assigning it the function call of createBST, passing in left as left,
+            and mid - 1 as right, so that all values to the left of midpoint are considered for the left subtree
+            calculate root.right by assigning it to the function call of createBST, passing in mid + 1 as left,
+            and right as right, this way everything to the right of midpoint is considered for the right subtree of root.
+
+            return root
+   Finally, finish the main balanceBST function by returning a call to createBST,
+   passing in 0, and length of tree_to_list - 1, and tree_to_list itself, to correspond to
+   left, right, and tree_list, respectively.
+
+   Time complexity: this algorithm has a time complexity of O(N). It will take linear time
+   to iterate through the tree to create the tree_to_list, and it will take linear time
+   to recreate the tree in a balanced fashion, as we will look at each element in tree_to_list
+   only once.
+

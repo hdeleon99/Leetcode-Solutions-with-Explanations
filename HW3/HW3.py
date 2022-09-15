@@ -179,3 +179,29 @@ print("largestValues(root1):", largestValues(tree1_node1_root))
 root2 = None
 print("input 2 is an empty tree and should return []")
 print("largestValues(input2):", largestValues(root2))
+
+# 4 =============================================================================
+def balanceBST(root):
+    tree_to_list = []
+    # if using preorder or postorder, sort before passing into createBST()
+    def createListInorder(root, tree_list):
+        # V L R
+        if root:
+            createListInorder(root.left, tree_list)
+            tree_list.append(root.val)
+            createListInorder(root.right, tree_list)
+
+    createListInorder(root, tree_to_list)
+
+    def createBST(left, right, tree_list):
+        if right < left:
+            return None
+
+        mid = (left + right) // 2
+        root = TreeNode(tree_list[mid])
+
+        root.left = createBST(left, mid - 1, tree_list)
+        root.right = createBST(mid + 1, right, tree_list)
+
+        return root
+    return createBST(0, len(tree_to_list) - 1, tree_to_list)
