@@ -1,4 +1,6 @@
-from collections import defaultdict
+from collections import defaultdict, deque
+from math import inf
+from typing import List
 
 # inputs for question 1
 q1input1 = [1, 1, 1, 3, 3, 4]
@@ -82,3 +84,86 @@ def findClosestElements(arr, k, x):
 print("Question 2 output ================================")
 print(findClosestElements(arr1, k1, x1))
 print(findClosestElements(arr2, k2, x2))
+
+# inputs for question 3
+q3input1 = [15, 13, 12, 10, 8, 9]
+q3k1 = 5  # should return 15, 13, 12, 10, 9
+
+q3input2 = []
+q3k2 = 1
+
+def peekTop(arr: List[int], k: int):
+    if len(arr) == 0:
+        return []
+    arr.sort(reverse=True)
+    res = []
+    for i in range(k):
+        res.append(arr[i])
+    return res
+
+
+print("Question 3 output ================================")
+print(peekTop(q3input1, q3k1))
+print(peekTop(q3input2, q3k2))
+
+# input for question 4
+q4input1 = [1]
+q4k1 = 1
+
+q4input2 = [1, 2]
+q4k2 = 4
+
+q4input3 = [2,-1,2]
+q4k3 = 3
+
+def shortestSubarray(nums: List[int], k:int) -> int:
+    length = len(nums)
+    deq = deque()
+    # [6, -3, 0] goal is 3
+    cumSum = 0
+    shortest = float(inf)
+
+    for i in range(length):
+        cumSum += nums[i]
+
+        if cumSum >= k:
+            shortest = min(shortest, i + 1)
+
+        curr = [float(-inf), float(-inf)]
+
+        while deq and ((cumSum - deq[-1][0]) >= k):
+            curr = deq[-1]
+            deq.pop()
+        if curr[0] != float(-inf):
+            shortest = min(shortest, (i - curr[1]))
+        while deq and (cumSum <= deq[0][0]):
+            deq.popleft()
+        deq.appendleft([cumSum, i])
+    return -1 if shortest == float(inf) else shortest
+
+print("Question 4 output ================================")
+print(shortestSubarray(q4input1, q4k1))
+print(shortestSubarray(q4input2, q4k2))
+print(shortestSubarray(q4input3, q4k3))
+
+print("Question 5 output =========================================")
+def kthSmallestPrimeFraction(arr: List[int], k: int) -> List[int]:
+    dictionary = defaultdict(list)
+    for i in range(len(arr)):
+        for j in range(i + 1, len(arr)):
+            dictionary[arr[i] / arr[j]] = [arr[i], arr[j]]
+    sorted_results = sorted(dictionary.keys())
+    # return dictionary.get(sorted_results[k-1])
+    return dictionary[sorted_results[k - 1]]
+
+q5input1 = [1,3,4,6]
+q5k1 = 1 # should return [1,6]
+
+q5input2 = [1,6,10,20]
+q5k2 = 2 # should return [1,10]
+
+q5input3 = [i for i in range(10000)]
+q5k3 = 540 # should return
+print(kthSmallestPrimeFraction(q5input1, q5k1))
+print(kthSmallestPrimeFraction(q5input2, q5k2))
+print(kthSmallestPrimeFraction(q5input3, q5k3))

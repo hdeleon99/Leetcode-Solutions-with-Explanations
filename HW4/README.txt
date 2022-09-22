@@ -74,3 +74,76 @@ NetID: YH2397
                 move right over by +1
         now left and right pointers should be standing at the beginning and end of our desired slice
         so return values in array from left to right
+        Time complexity: because we use binary search to find the number closest to x, followed by
+        a while loop that runs k-1 times, the time complexity is O(logn + k-1) or just O(logn)
+#3
+    This algorithm takes an array (or heap) of nums and k, which will be the number of numbers
+    to return.
+
+    To begin, sort the array in place by calling python's sort() function, and sort it in reverse.
+    This function has a time complexity of O(nlogn)
+
+    Next, create an empty result list.
+
+    Next, iterate through the sorted array up until k;
+        append arr[i] to the result list
+    return res
+
+    overall this has a time complexity of O(nlogn) because we use the python sort() function to sort in place
+
+#4
+    This algorithm takes advantage of a deque data structure in python, which is a double ended queue
+
+    Define and initialize the deque object, called deq
+
+    initialize a variable cumSum to 0
+    initialize a variable shortest to equal positive infinity
+
+    loop through the length of the array:
+        cumSum equals itself plus nums at i
+
+        if cumSum >= k:
+            reassign shortest to equal the minimum between itself and i + 1, or the current iterator value
+
+        define and initialize a variable curr to equal a list of [-inf, +inf]
+
+        while there are items in deq and ((cumSum - deq[-1][0]) >= k:
+            curr equals the last item in deq
+            pop the deq
+        if curr at 0 does not equal -inf:
+            shortest equals the minimum between itself and i - the element at position 1 in curr
+        while there are items in deq and cumSum is less than or equal to element at [0][0] in deq:
+            pop the deq from the left
+        append left to the deq cumSum and the current iterator value as a list
+        return -1 if shortest equals inf and was never reassigned, else return shortest
+
+
+# 5
+The solution provided for problem 5 is a brute force solution. It takes advantage of a dictionary
+data structure to hold key:value pairs of list:result.
+
+Define kThSmallestprimeFraction with parameters arr and k, where arr is an array of
+increasing and sorted numbers, and k is the Kth smallest fraction to return.
+
+Define and initialize an empty dictionary called dictionary
+
+for num at i where i = 0 at first and goes until len(arr)
+    for num at j where j = i + 1
+        to the dictionary, add the numbers at arr[i] and arr[j] as a list to the dict's values,
+        and assign the key to equal the result of arr[i]/arr[j]
+Now define and initialize an array called sorted_results, and call on python's sorted(),
+passing in the dictionary.keys() as an argument. This will create an array
+of dictionary's keys in sorted order, in other words this will create an array
+of sorted results for each nums[i]/nums[j], where the smallest result starts at the beginning
+of the array.
+From here, we can simply return the value (which will be a list of two nums: nums[i], nums[j])
+at index sorted_results[k-1], because sorted_results[k-1] will give us the k'th smallest
+result in the list, and we can use this result of division to retrieve the corresponding value
+at that result's key in the dictionary.
+
+This algorithm is not very efficient, and the more efficient algorithms are quite complex and
+are not suitable for an interview. Therefore, the time complexity of this approach is
+O(n^2 + nlog(n)), where n is the size of the array provided. O(n^2) because we use
+a for loop within a for loop to calculate the result of arr[i]/arr[j] to add it to the dictionary
+and nlog(n) because we call on python's sorted() function after calculating all fractions,
+and that method has a complexity of nlog(n)
