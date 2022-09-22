@@ -143,7 +143,8 @@ at that result's key in the dictionary.
 
 This algorithm is not very efficient, and the more efficient algorithms are quite complex and
 are not suitable for an interview. Therefore, the time complexity of this approach is
-O(n^2 + nlog(n)), where n is the size of the array provided. O(n^2) because we use
+O(n^2), where n is the size of the array provided. O(n^2) because we use
 a for loop within a for loop to calculate the result of arr[i]/arr[j] to add it to the dictionary
-and nlog(n) because we call on python's sorted() function after calculating all fractions,
-and that method has a complexity of nlog(n)
+We do not consider the complexity of sorted() being nlogn because it is not the fastest growing portion
+of this algorithm. So the overall complexity is O(N^2). The space complexity is O(2n) or just O(n)
+because our dictionary will hold almost 2xN number of results.
