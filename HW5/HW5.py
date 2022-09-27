@@ -1,3 +1,13 @@
+from math import inf
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 def removeInvalidParentheses(s):
     """"""
     # count the number of '(' and ')' needs to be removed
@@ -36,8 +46,43 @@ def removeInvalidParentheses(s):
     dfs(0, '', 0, del_l, del_r)
     return list(res)
 
+
 print("#1 Input and Outputs ====================================================")
 q1i1 = "((a)))"
 q1i2 = "()()((()"
 print(removeInvalidParentheses(q1i1))
 print(removeInvalidParentheses(q1i2))
+
+
+def getMinimumDifference(root):
+    def inorderTraversal(root, array):
+        if root:
+            inorderTraversal(root.left, array)
+            array.append(root.val)
+            inorderTraversal(root.right, array)
+
+    inorder_array = []
+    inorderTraversal(root, inorder_array)
+
+    minDiff = float(inf)
+    for i in range(len(inorder_array) - 1):
+        minDiff = min(minDiff, abs(inorder_array[i] - inorder_array[i - 1]),
+                      abs(inorder_array[i] - inorder_array[i + 1]))
+    return minDiff
+
+
+print("#1 Input and Outputs ====================================================")
+root = TreeNode(3)
+root.left = TreeNode(1)
+root.right = TreeNode(6)
+root.right.left = TreeNode(4)
+root.right.right = TreeNode(7)
+print("getMinimumDifference(root) returned: ", getMinimumDifference(root)) # --> should return 1
+
+root2 = TreeNode(100)
+root2.left = TreeNode(30)
+root2.left.left = TreeNode(20)
+root2.left.right = TreeNode(40)
+root2.right = TreeNode(150)
+root2.right.left = TreeNode(120)
+print("getMinimumDifference(root2) returned: ", getMinimumDifference(root2)) # --> should return 10

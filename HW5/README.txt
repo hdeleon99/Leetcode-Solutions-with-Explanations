@@ -38,3 +38,41 @@
         call on dfs function passing in: 0, '', 0, del_l, del_r
         return a list of res
         Time complexity is O(2*N)
+
+#2
+    This algorithm takes advantage of the condition that we are working with a
+    binary search tree. We can iterate through the tree inorder and create a
+    list that has all nodes of the array in order, and use this ordered list to find
+    a minimum sum.
+
+    Begin by defining the function, getMinimumDifference, taking root as a parameter
+    where root is the root of a binary search tree.
+
+    within this function we can define a nested method to perform the inorder traversal:
+        define inorderTraversal, taking as parameters root and array, where root is the
+        initial root of the BST passed into getMinimumDifference, and array is the
+        empty array to hold the ordered nodes of the tree.
+            if root is not null:
+                recursive call to inorderTraversal() method, taking as parameters
+                root.left, and array
+                append the value of root to array
+                recursive call to inorderTravesal() method, taking as parameters root.right,
+                and array
+        prepare to call on inorderTraversal method by creating and initializing
+        an empty list called inorder_array
+        call on inorderTraversal passing in root and inorder_array
+
+        define and initialize a variable called minDiff to equal positive infinity
+        iterate through the length of inorder_array - 1:
+            reassign minDiff to equal the minimum between itself, and the absolute value of
+            inorder_array[i] - inorder_array[i-1] and the absolute value of inorder_array[i]-
+            inorder_array[i+1]
+        return minDiff
+        Since we know inorder_array will contain the sorted contents of the tree,
+        we can compare values in a linear fashion instead of having to use two nested for loops
+
+        Time complexity: the time complexity of this algorithm is O(N), as the inorder
+        traversal of the tree is O(n), and the iteration through the newly created
+        array is o(n), and finding the min using python's min() function is O(n),
+        however we only ever compare 3 values at once using min(), instead of calling it
+        on the entire array. So the time complexity would be O(N*3) or just O(N)
