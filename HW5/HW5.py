@@ -1,4 +1,6 @@
+from collections import deque
 from math import inf
+from typing import List
 
 
 class TreeNode:
@@ -86,3 +88,93 @@ root2.left.right = TreeNode(40)
 root2.right = TreeNode(150)
 root2.right.left = TreeNode(120)
 print("getMinimumDifference(root2) returned: ", getMinimumDifference(root2)) # --> should return 10
+
+
+def shortestPathLength(graph):
+    if len(graph[0]) == 0:
+        return 0
+
+    n = len(graph)
+
+    q = deque()
+
+    for i in range(n):
+        q.append((i, frozenset([i])))
+    seen = set(q)
+
+    steps = 0
+
+    while q:
+        temp = deque()
+        while q:
+            cur, mask = q.popleft()
+            mask = list(mask)
+            for node in graph[cur]:
+                mask.append(node)
+                nextMask = frozenset(mask)
+                if len(nextMask) == n:
+                    return steps + 1
+                if (node, nextMask) not in seen:
+                    temp.append((node, nextMask))
+                    seen.add((node, nextMask))
+                mask.pop()
+        steps += 1
+        q = temp
+    return steps
+
+
+print("#3 Input ----------------------------------------")
+graph = [[1,2,3],[0],[0],[0]]
+print("shortestPathLength:", shortestPathLength(graph))
+
+def maxPathSum(root):
+    res = [root.val]
+
+    def dfs(root):
+        if not root:
+            return 0
+        leftMax = dfs(root.left)
+        rightMax = dfs(root.right)
+
+        leftMax = max(leftMax, 0)
+        rightMax = max(rightMax, 0)
+
+        res[0] = max(res[0], root.val + leftMax + rightMax)
+
+        # cant choose both or else this means we're splitting.
+        # when we split we don't have a valid path
+
+        return root.val + max(leftMax, rightMax)
+
+    dfs(root)
+    return res[0]
+
+
+print("#4 Input ----------------------------------------")
+num3_root = TreeNode(1)
+num3_root.left = TreeNode(2)
+num3_root.right = TreeNode(3)
+num3Root1 = [1,2,3] # should return 6
+print("MaxPathSum(): ", maxPathSum(num3_root))
+
+
+def LexigraphicalOrder(n: int) -> List[int]:
+    result = []
+    def dfs(temp, n, result_list):
+        if temp > n:
+            return
+        result_list.append(temp)
+        dfs(temp * 10, n, result_list)
+        if temp % 10 != 9:
+            dfs(temp + 1, n, result_list)
+
+    dfs(1, n, result)
+    return result
+
+print("#5 Input and Output ==========================================")
+n1 = 11
+n2 = 9
+n3 = 20
+print(LexigraphicalOrder(n1))
+print(LexigraphicalOrder(n2))
+print(LexigraphicalOrder(n3))
