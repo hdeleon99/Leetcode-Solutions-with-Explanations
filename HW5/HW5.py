@@ -1,7 +1,7 @@
 from collections import deque
 from math import inf
-from typing import List
-
+#from typing import List
+import typing
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):
@@ -56,7 +56,7 @@ print(removeInvalidParentheses(q1i1))
 print(removeInvalidParentheses(q1i2))
 
 
-def getMinimumDifference(root):
+def getMinimumDifference(root: TreeNode):
     def inorderTraversal(root, array):
         if root:
             inorderTraversal(root.left, array)
