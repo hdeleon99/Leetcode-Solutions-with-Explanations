@@ -1,4 +1,3 @@
-# 2
 import collections
 import heapq
 from typing import List
@@ -60,6 +59,46 @@ class Solution:
                 heapq.heappush(pq, [this_cost, this_city])
         return -1
 
+    @staticmethod
+    def validPath(n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        # bfs approach
+        # create a dictionary representation of the graph
+        graph = collections.defaultdict(list)
+        # example: edges = [[0,1], [2,0], [1,2]]
+        for edge in edges:  # O(N)
+            # bidirectional so we consider both vertex
+            graph[edge[0]].append(edge[1])
+            graph[edge[1]].append(edge[0])
+        # resulting dictionary: graph = {0:[1,2], 1:[0,2], 2:[0,1]}
+
+        # create a queue for the bfs approach, with the source node added as the first element in the queue
+        queue = collections.deque([source])  # O(1)
+
+        # create a set to keep track of visited nodes
+        visited = set()  # O(1)
+
+        # do bfs
+        while queue:  # O(V)
+            node = queue.popleft()  # O(1)
+
+            if node == destination:  # O(1)
+                return True
+
+            visited.add(node)  # O(1)
+
+            # No vertex will have N number of neighbors
+            for neighbor in graph[node]:  # O(
+                if neighbor in visited:
+                    continue
+                queue.append(neighbor)
+        return False
+
+
+# 1
+print("Solution.validPath(n = 3, [[1,0], [1,2], [2,0]], source = 1, destination = 2",
+      Solution.validPath(n=3, edges=[[1, 0], [1, 2], [2, 0]], source=1, destination=2))
+print("Solution.validPath(n=7, edges=[[0,1], [1,2], [2,0], [2,3], [3,4], [5,6]], source=0, destination=7",
+      Solution.validPath(n=7, edges=[[0, 1], [1, 2], [2, 0], [2, 3], [3, 4], [5, 6]], source=0, destination=7))
 
 # 2
 print("Solution.longestCycle(edges1)", Solution.longestCycle(edges1))
