@@ -46,7 +46,7 @@ list of ints.
         then break the while.
 
         For every seen node, discard it from nodes.
-Time complexity: The time complexity of this algorithm is O(N). No node is visited more than once.
+Time complexity: The time complexity of this algorithm is O(V + E). No node is visited more than once.
 
 
 Number 3:
@@ -75,4 +75,4 @@ and connections, the list of lists representing the possible connections of thes
             push to the priority queue the list of this_cost and this_city calculated above
     if the return statement above never executes, then it is not possible to return a minimum
     cost so return -1
-
+The time complexity is: O(V+E), each vertex and edge will be visited at most once
