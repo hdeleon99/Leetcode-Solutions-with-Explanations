@@ -75,3 +75,27 @@ print(networkDelayTime(times=[[1,2,1],[2,3,2],[1,3,2]], n=3, k=1))  # should ret
 print(networkDelayTime(times=[[1,2,1],[2,3,2],[1,3,2], [4,5,1]], n=5, k=1))  # should return -1
 
 
+def minCostToSupplyWater(n: int, wells: List[int], pipes: List[List[int]]) -> int:
+    union_find = {i: i for i in range(n + 1)}
+
+    def find(x):
+        return x if x == union_find[x] else find(union_find[x])
+
+    def union(x, y):
+        px = find(x)
+        py = find(y)
+        union_find[px] = py
+
+    graph_wells = [[cost, 0, i] for i, cost in enumerate(wells, 1)]
+    graph_pipes = [[cost, i, j] for i, j, cost in pipes]
+    min_costs = 0
+    for cost, x, y in sorted(graph_wells + graph_pipes):
+        if find(x) == find(y):
+            continue
+        union(x, y)
+        min_costs += cost
+        n -= 1
+        if n == 0:
+            return min_costs
+print("#3 ====================================")
+print(minCostToSupplyWater(n=3, wells=[1,2,2], pipes=[[1,2,1],[2,3,1]]))

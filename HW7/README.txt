@@ -64,3 +64,11 @@ Time complexity:
     There are V vertices and E edges in this graph. The minheap pop() method
     occurs in Log(N) time, and we perform it on V vertices so O(Log(V)), for each edge
     so time complexity is O(ELog(V))
+#3
+Hard to understand this problem because it is a leetcode premium problem and I cannot
+refer to any discussions of its solutions. Please consider not using problems hidden behind a
+paywall for future use.
+
+Time complexity: Time complexity of this approach is
+O(ElogE + ElogV) where E is the number of edges in the graph
+which the number of operations in the union and finding each edge in the list provided
