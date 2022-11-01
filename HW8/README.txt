@@ -36,3 +36,23 @@ Time complexity:
     and N is the number of courses. Each course will need to have its prereqs validated,
     and each prereq will need to validate any prereqs that it has, so at most each node/edge will
     be visited twice
+
+#2
+This problem utilizes bit manipulation instead of using the division, multiplication, or
+modulo operators.
+Begin by initializing a positive variable to equal true if both the divisor and the dividend
+are less than zero or both greater than zero, and false if one is less than zero while the other is
+greater
+initialize dividend and divisor to equal their absolute values
+initialize result to equal zero
+while dividend is greater than or equal to divisor:
+    initialize a temp variable to equal divisor, and i to equal 1
+    while dividend is greater than or equal to temp:
+        decrement dividend by temp
+        increment result variable by i
+        bitshift i by 1
+        bitshift temp by 1
+if positive is false then we need to return a negative result, so res = -res
+to avoid overflow errors or divisors of zero
+Time complexity:
+This algorithm runs in O(1) time
