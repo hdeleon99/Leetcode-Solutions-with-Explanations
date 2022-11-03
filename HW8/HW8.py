@@ -1,3 +1,4 @@
+from math import inf
 from typing import List
 
 
@@ -56,7 +57,7 @@ def divide(dividend, divisor):
         temp, i = divisor, 1
 
         while dividend >= temp:
-            print(j)
+            #print(j)
             j-=1
             dividend -= temp
             res += i
@@ -69,3 +70,27 @@ print("#2 input/output")
 print(divide(dividend=1000, divisor=2))
 print(divide(dividend=10, divisor=0))
 print(divide(dividend=-20, divisor=10))
+
+
+def coinChange(coins: List[int], amount: int) -> int:
+    cache = [float(inf)] * (amount + 1)
+    # dynamic programming base case
+    cache[0] = 0
+
+    for i in range(1, amount + 1):
+        for coin in coins:
+            diff = i - coin
+            if diff >= 0:
+                cache[i] = min(cache[i], 1 + cache[diff])
+    return cache[amount] if cache[amount] != float(inf) else -1
+
+'''
+coins = [1,3,4,5]
+cache[0] = 0
+             i - coin
+cache[1] --> 1 - 1 = 0 >= 0, so 1 + cache[0] = 1 + 0, cache[1] = 0
+cache[1] --> 1 - 3 = -2 !>= 0, so we cannot access an element in cache at cache[-2]
+'''
+print("#3 input/output")
+print(coinChange(coins=[1,3,4,5], amount=7)) # should return 2, 3 + 4 = 7
+print(coinChange(coins=[2, 7], amount=5)) # should return -1

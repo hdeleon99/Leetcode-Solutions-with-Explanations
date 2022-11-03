@@ -56,3 +56,27 @@ if positive is false then we need to return a negative result, so res = -res
 to avoid overflow errors or divisors of zero
 Time complexity:
 This algorithm runs in O(1) time
+
+#3 This algorithm uses a bottom up DFS/DP approach to solve the problem
+We will store our "DP" cases, or utilize memoization using a simple list called cache that holds
+amount + 1 number of elements, initialized to positive infinity at first
+
+Initialize the base case of DP:
+    Cache at index 0 equals 0, because it takes 0 coins to sum to 0
+For each number up to amount+1, starting at 1,
+    for each coin in the list of coins,
+        calculate the difference between the current number and the current coin
+        if the difference is greater than or equal to 0, then this is possibly a valid combination of
+        current coin values and previous coin values, and we can also access an element at index difference in cache,
+        if difference was negative we could not access the element in cache
+            so initialize the value of cache at index number to equal the minimum
+            between itself, and (1 + cache[difference]). This will go through all
+            coin values (assuming the difference is equal to or greater than zero), and determine\
+            from which previous calculations can we achieve this sum with the minimum number
+            of coins
+    Once both loops have run, the element at index amount in cache will provide
+    the minimum number of coins to hit that sum, amount, so return it but only
+    if it is not equal to positive infinity, or else
+    Time complexity:
+    The time complexity is O(N*M) where N equals the amount, and M equals the number of coins
+
