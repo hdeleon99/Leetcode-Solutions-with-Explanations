@@ -1,7 +1,9 @@
 from math import inf
 from typing import List
 
-
+# Hector Issiah Deleon
+# NetID: YH2397
+# Assignment 8
 def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
     preMap = {i: [] for i in range(numCourses)}
     for course, prereq in prerequisites:

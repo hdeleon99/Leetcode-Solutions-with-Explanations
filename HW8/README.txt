@@ -1,3 +1,6 @@
+Hector Issiah Deleon
+NetID: YH2397
+Assignment 8
 #1
 This algorithm utilizes a DFS approach to traversing a graph representing course
 prerequisites.
