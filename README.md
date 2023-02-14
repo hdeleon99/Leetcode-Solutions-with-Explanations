@@ -1,7 +1,5 @@
 Hector Issiah Deleon
-
 CS497-Professional Development
-
 Repository for leetcode solutions 
 
 
